@@ -163,18 +163,33 @@ checkoutBtn.addEventListener("click", function(){
         return;
     } 
 
-    // enviar o pedido para api whats
+  // enviar o pedido para api whats
 
-   const cartItems = cart.map((item) => {
-    return (
-        ` ${item.name} Quantidade: (${item.quantity}) Preço: R$${item.price} |`
-    )
-   }) .join("")
+const cartItems = cart.map((item) => {
+    return `- ${item.quantity}x ${item.name} — R$ ${item.price.toFixed(2).replace(".", ",")}\n`;
+}).join("");
 
-   const message = encodeURIComponent(cartItems)
-   const phone = "5521970570175"
+const total = cart.reduce((sum, item) => {
+    return sum + (item.price * item.quantity);
+}, 0);
 
-   window.open(`https://wa.me/${phone}?text=${message} Endereço: ${addressInput.value}`, "_blank")
+const message = encodeURIComponent(
+`CIBATATA — NOVO PEDIDO
+
+PEDIDO:
+${cartItems}
+TOTAL: R$ ${total.toFixed(2).replace(".", ",")}
+
+ENDEREÇO:
+${addressInput.value}
+
+Enviado pelo site CIBATATA`
+);
+
+const phone = "5521970570175";
+
+window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+  
 
 })
 
