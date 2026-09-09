@@ -394,6 +394,44 @@
             />
             <p class="text-red-500 hidden" id="address-warn">Digite seu endereço completo!</p>
 
+            <p class="font-bold mt-4">Forma de pagamento</p>
+
+<select
+    id="payment-method"
+    class="w-full border-2 p-2 rounded my-1"
+>
+    <option value="">Selecione uma forma de pagamento</option>
+    <option value="Débito">Cartão de débito</option>
+    <option value="Crédito">Cartão de crédito</option>
+    <option value="PIX">PIX</option>
+    <option value="Dinheiro">Dinheiro</option>
+</select>
+
+<p
+    class="text-red-500 hidden"
+    id="payment-warn"
+>
+    Selecione uma forma de pagamento!
+</p>
+
+<div id="change-container" class="hidden">
+    <p class="font-bold mt-3">Troco para quanto?</p>
+
+    <input
+        type="text"
+        id="change"
+        placeholder="Ex: 50,00"
+        class="w-full border-2 p-2 rounded my-1"
+    />
+
+    <p
+        class="text-red-500 hidden"
+        id="change-warn"
+    >
+        Informe o valor para o troco!
+    </p>
+</div>
+
             <div class="flex items-center justify-between mt-5 w-full">
                 <button id="close-modal-btn">Fechar</button>
                 <button id="checkout-btn" class="bg-green-500 text-white px-4 py-1 rounded">Finalizar pedido</button>

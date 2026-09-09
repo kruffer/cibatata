@@ -8,6 +8,25 @@ const closeModalBtn = document.getElementById("close-modal-btn")
 const cartCounter = document.getElementById("cart-count")
 const addressInput = document.getElementById("address")
 const addressWarn = document.getElementById("address-warn")
+const paymentMethod = document.getElementById("payment-method")
+const paymentWarn = document.getElementById("payment-warn")
+const changeContainer = document.getElementById("change-container")
+const changeInput = document.getElementById("change")
+const changeWarn = document.getElementById("change-warn")
+
+paymentMethod.addEventListener("change", function() {
+
+    paymentWarn.classList.add("hidden")
+
+    if(paymentMethod.value === "Dinheiro") {
+        changeContainer.classList.remove("hidden")
+    } else {
+        changeContainer.classList.add("hidden")
+        changeInput.value = ""
+        changeWarn.classList.add("hidden")
+    }
+
+})
 
 let cart = [];
 
@@ -163,6 +182,22 @@ checkoutBtn.addEventListener("click", function(){
         return;
     } 
 
+    if(paymentMethod.value === "") {
+
+    paymentWarn.classList.remove("hidden")
+
+    return;
+
+}
+
+if(paymentMethod.value === "Dinheiro" && changeInput.value === "") {
+
+    changeWarn.classList.remove("hidden")
+
+    return;
+
+}
+
   // enviar o pedido para api whats
 
 const cartItems = cart.map((item) => {
@@ -173,15 +208,26 @@ const total = cart.reduce((sum, item) => {
     return sum + (item.price * item.quantity);
 }, 0);
 
+let paymentMessage = `PAGAMENTO: ${paymentMethod.value}`
+
+if(paymentMethod.value === "Dinheiro") {
+    paymentMessage += `\nTROCO PARA: R$ ${changeInput.value}`
+}
+
 const message = encodeURIComponent(
 `CIBATATA — NOVO PEDIDO
 
 PEDIDO:
+
 ${cartItems}
+
 TOTAL: R$ ${total.toFixed(2).replace(".", ",")}
 
 ENDEREÇO:
+
 ${addressInput.value}
+
+${paymentMessage}
 
 Enviado pelo site CIBATATA`
 );
